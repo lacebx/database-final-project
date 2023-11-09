@@ -58,6 +58,100 @@ def get_subjects(book_id):
     subject_names = [subject[0] for subject in subjects]
     return ", ".join(subject_names)
 
+def search_authors():
+    # Clear the result text box
+    result_text.delete(1.0, END)
+
+    # Get the search keyword
+    keyword = search_entry.get()
+
+    # Search for authors with the keyword in the name
+    query = "SELECT * FROM Authors WHERE name LIKE %s"
+    value = ("%" + keyword + "%",)
+    cursor.execute(query, value)
+    authors = cursor.fetchall()
+
+    # Display the search results
+    for author in authors:
+        result_text.insert(END, f"Name: {author[1]}\n")
+        result_text.insert(END, f"Birth Year: {author[2]}\n")
+        result_text.insert(END, f"Death Year: {author[3]}\n")
+        result_text.insert(END, "------------------------\n")
+
+    # Clear the search entry
+    search_entry.delete(0, END)
+
+def search_subjects():
+    # Clear the result text box
+    result_text.delete(1.0, END)
+
+    # Get the search keyword
+    keyword = search_entry.get()
+
+    # Search for subjects with the keyword in the subject
+    query = "SELECT * FROM Subjects WHERE subject LIKE %s"
+    value = ("%" + keyword + "%",)
+    cursor.execute(query, value)
+    subjects = cursor.fetchall()
+
+    # Display the search results
+    for subject in subjects:
+        result_text.insert(END, f"Subject: {subject[1]}\n")
+        result_text.insert(END, "------------------------\n")
+
+    # Clear the search entry
+    search_entry.delete(0, END)
+
+def search_translators():
+    result_text.delete(1.0, END)
+    keyword = search_entry.get()
+    query = "SELECT * FROM Translators WHERE name LIKE %s"
+    value = ("%" + keyword + "%",)
+    cursor.execute(query, value)
+    translators = cursor.fetchall()
+    for translator in translators:
+        result_text.insert(END, f"Name: {translator[1]}\n")
+        result_text.insert(END, f"Birth Year: {translator[2]}\n")
+        result_text.insert(END, f"Death Year: {translator[3]}\n")
+        result_text.insert(END, "------------------------\n")
+    search_entry.delete(0, END)
+
+def search_bookshelves():
+    result_text.delete(1.0, END)
+    keyword = search_entry.get()
+    query = "SELECT * FROM Bookshelves WHERE bookshelf LIKE %s"
+    value = ("%" + keyword + "%",)
+    cursor.execute(query, value)
+    bookshelves = cursor.fetchall()
+    for bookshelf in bookshelves:
+        result_text.insert(END, f"Bookshelf: {bookshelf[1]}\n")
+        result_text.insert(END, "------------------------\n")
+    search_entry.delete(0, END)
+
+def search_languages():
+    result_text.delete(1.0, END)
+    keyword = search_entry.get()
+    query = "SELECT * FROM Languages WHERE language LIKE %s"
+    value = ("%" + keyword + "%",)
+    cursor.execute(query, value)
+    languages = cursor.fetchall()
+    for language in languages:
+        result_text.insert(END, f"Language: {language[1]}\n")
+        result_text.insert(END, "------------------------\n")
+    search_entry.delete(0, END)
+
+def search_formats():
+    result_text.delete(1.0, END)
+    keyword = search_entry.get()
+    query = "SELECT * FROM Formats WHERE format_type LIKE %s"
+    value = ("%" + keyword + "%",)
+    cursor.execute(query, value)
+    formats = cursor.fetchall()
+    for format in formats:
+        result_text.insert(END, f"Format Type: {format[1]}\n")
+        result_text.insert(END, f"Format URL: {format[2]}\n")
+        result_text.insert(END, "------------------------\n")
+    search_entry.delete(0, END)
 
 # Create the main window
 window = Tk()
